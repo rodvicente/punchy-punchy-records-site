@@ -1066,7 +1066,20 @@ textarea:focus {
   }
 
   .hero-slide {
-    object-position: 48% center;
+    object-position: var(--hero-mobile-position, var(--hero-position, 48% center));
+  }
+
+  .hero-slide-1 {
+    --hero-mobile-position: 30% center;
+  }
+
+  .hero-slide-2 {
+    --hero-mobile-position: 74% center;
+  }
+
+  .hero-slide-7 {
+    --hero-mobile-position: center top;
+    object-fit: contain;
   }
 
   .spectrum {
