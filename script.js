@@ -26,7 +26,7 @@ const translations = {
       title: "Got music to show?",
       p1: "If you are working on an urban, electronic, alternative or hard-to-label project, you can submit your demo for us to listen.",
       p2: "We accept demos, finished songs, ideas in development and projects with their own identity.",
-      notice: "Please send listening links. Do not attach heavy files."
+      notice: "You can send a listening link and attach one audio file up to 10 MB."
     },
     artists: { title: "Artists", badge: "Roster" },
     platforms: { title: "Links / Platforms" },
@@ -39,8 +39,16 @@ const translations = {
       artistName: "Artist name",
       email: "Email",
       location: "Country / city",
+      projectType: "Project type",
+      selectOne: "Select one",
+      projectDemo: "Demo / unreleased song",
+      projectFinished: "Finished release",
+      projectProducer: "Producer / beatmaker",
+      projectArtist: "Artist project",
+      projectOther: "Other",
       listenLink: "Listening link",
       genre: "Genre / style",
+      referenceFile: "Audio file",
       message: "Message",
       name: "Name",
       subject: "Subject"
@@ -76,7 +84,7 @@ const translations = {
       title: "¿Tenés música para mostrar?",
       p1: "Si estás trabajando en un proyecto urbano, electrónico, alternativo o difícil de encasillar, podés enviar tu maqueta para que la escuchemos.",
       p2: "Aceptamos demos, canciones terminadas, ideas en desarrollo y proyectos con identidad propia.",
-      notice: "Por favor enviá links de escucha. No adjuntes archivos pesados."
+      notice: "Podés enviar un link de escucha y adjuntar un archivo de audio de hasta 10 MB."
     },
     artists: { title: "Artistas", badge: "Roster" },
     platforms: { title: "Links / Plataformas" },
@@ -89,8 +97,16 @@ const translations = {
       artistName: "Nombre artístico",
       email: "Email",
       location: "País / ciudad",
+      projectType: "Tipo de proyecto",
+      selectOne: "Elegí una opción",
+      projectDemo: "Demo / canción inédita",
+      projectFinished: "Lanzamiento terminado",
+      projectProducer: "Productor / beatmaker",
+      projectArtist: "Proyecto artístico",
+      projectOther: "Otro",
       listenLink: "Link de escucha",
       genre: "Género / estilo",
+      referenceFile: "Archivo de audio",
       message: "Mensaje",
       name: "Nombre",
       subject: "Motivo"
@@ -542,6 +558,8 @@ document.querySelectorAll(".main-nav a, .site-footer a").forEach((link) => {
 });
 
 document.querySelectorAll("form").forEach((form) => {
+  if (form.hasAttribute("action")) return;
+
   const status = document.createElement("p");
   status.className = "form-status wide";
   status.setAttribute("role", "status");

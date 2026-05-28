@@ -107,14 +107,29 @@
             <h2 data-i18n="demos.title">Got music to show?</h2>
             <p data-i18n="demos.p1">If you are working on an urban, electronic, alternative or hard-to-label project, you can submit your demo for us to listen.</p>
             <p data-i18n="demos.p2">We accept demos, finished songs, ideas in development and projects with their own identity.</p>
-            <p class="notice" data-i18n="demos.notice">Please send listening links. Do not attach heavy files.</p>
+            <p class="notice" data-i18n="demos.notice">You can send a listening link and attach one audio file up to 10 MB.</p>
           </div>
-          <form class="panel-form" aria-label="Demo submission form">
+          <form class="panel-form" action="https://formsubmit.co/punchypunchyrecords@gmail.com" method="post" enctype="multipart/form-data" aria-label="Demo submission form">
+            <input type="hidden" name="_subject" value="New Punchy Punchy Records demo submission">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_autoresponse" value="Thanks for sending your music to Punchy Punchy Records. We received your submission and will listen as soon as possible.">
             <label><span data-i18n="forms.artistName">Artist name</span> <input name="artist" autocomplete="name" required></label>
             <label><span data-i18n="forms.email">Email</span> <input type="email" name="email" autocomplete="email" required></label>
             <label><span data-i18n="forms.location">Country / city</span> <input name="location" autocomplete="address-level2"></label>
+            <label>
+              <span data-i18n="forms.projectType">Project type</span>
+              <select name="project_type" required>
+                <option value="" data-i18n="forms.selectOne">Select one</option>
+                <option data-i18n="forms.projectDemo">Demo / unreleased song</option>
+                <option data-i18n="forms.projectFinished">Finished release</option>
+                <option data-i18n="forms.projectProducer">Producer / beatmaker</option>
+                <option data-i18n="forms.projectArtist">Artist project</option>
+                <option data-i18n="forms.projectOther">Other</option>
+              </select>
+            </label>
             <label><span data-i18n="forms.listenLink">Listening link</span> <input type="url" name="listen" placeholder="https://" required></label>
             <label><span data-i18n="forms.genre">Genre / style</span> <input name="genre"></label>
+            <label class="wide"><span data-i18n="forms.referenceFile">Audio file</span> <input name="attachment" type="file" accept="audio/*,.mp3,.wav,.aiff,.aif,.m4a,.flac,.ogg"></label>
             <label class="wide"><span data-i18n="forms.message">Message</span> <textarea name="message" rows="5"></textarea></label>
             <button class="button button-primary wide" type="submit" data-i18n="buttons.submitDemo">Submit demo</button>
           </form>
@@ -155,7 +170,10 @@
             <a class="mail-link" href="mailto:punchypunchyrecords@gmail.com">punchypunchyrecords@gmail.com</a>
             <a class="button button-secondary" href="mailto:punchypunchyrecords@gmail.com" data-i18n="buttons.email">Write by email</a>
           </div>
-          <form class="panel-form" aria-label="Contact form">
+          <form class="panel-form" action="https://formsubmit.co/punchypunchyrecords@gmail.com" method="post" enctype="multipart/form-data" aria-label="Contact form">
+            <input type="hidden" name="_subject" value="New message for Punchy Punchy Records">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_autoresponse" value="Thanks for contacting Punchy Punchy Records. We received your message and will get back to you soon.">
             <label><span data-i18n="forms.name">Name</span> <input name="name" autocomplete="name" required></label>
             <label><span data-i18n="forms.email">Email</span> <input type="email" name="email" autocomplete="email" required></label>
             <label class="wide"><span data-i18n="forms.subject">Subject</span> <input name="subject" required></label>
