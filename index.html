@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Punchy Punchy Records, an independent label focused on urban, electronic and alternative sounds.">
+    <title>Punchy Punchy Records</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header" data-header>
+      <a class="brand" href="#inicio" aria-label="Punchy Punchy Records home">
+        <span class="brand-mark">PP</span>
+        <span class="brand-text">Punchy Punchy <strong>Records</strong></span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" data-nav-toggle>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="main-nav" aria-label="Main navigation" data-nav>
+        <a href="#inicio" data-i18n="nav.home">Home</a>
+        <a href="#lanzamientos" data-i18n="nav.releases">Releases</a>
+        <a href="#about">About</a>
+        <a href="#maqueta" data-i18n="nav.demos">Submit demos</a>
+        <a href="#contacto" data-i18n="nav.contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="social-strip" aria-label="Main platforms">
+          <a href="https://open.spotify.com/intl-es/artist/2TMbr2pJzuY2AvSAkZjL1U?si=5ODBs_6NRw2A9DtL1bKjIQ" aria-label="Spotify" data-platform-icon="spotify"></a>
+          <a href="https://www.instagram.com/rodvicentemusic" aria-label="Instagram" data-platform-icon="instagram"></a>
+          <a href="https://youtube.com/@rodvicentemusic" aria-label="YouTube" data-platform-icon="youtube"></a>
+          <a href="#" aria-label="SoundCloud" data-platform-icon="soundcloud"></a>
+        </div>
+        <button class="language-toggle" type="button" data-lang-toggle aria-label="Switch language">ES</button>
+        <a class="button button-primary button-small" href="#lanzamientos" data-i18n="buttons.listenNow">Listen now</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero section-band" id="inicio">
+        <div class="hero-visual" aria-hidden="true">
+          <div class="hero-slider">
+            <img class="hero-slide hero-slide-1 is-flipped" src="assets/hero/ROD_001.jpg" alt="">
+            <img class="hero-slide hero-slide-2 is-flipped" src="assets/hero/ROD_025.jpg" alt="">
+            <img class="hero-slide hero-slide-3" src="assets/hero/ROD_007.jpg" alt="">
+            <img class="hero-slide hero-slide-4" src="assets/hero/ROD_022.jpg" alt="">
+            <img class="hero-slide hero-slide-5" src="assets/hero/ROD_027.jpg" alt="">
+            <img class="hero-slide hero-slide-6" src="assets/covers/FUERZA.png" alt="">
+          </div>
+          <div class="pulse-ring"></div>
+          <div class="spectrum spectrum-a"></div>
+          <div class="spectrum spectrum-b"></div>
+          <div class="crowd-lines"></div>
+        </div>
+
+        <div class="container hero-content">
+          <p class="eyebrow">Independent music / No compromise</p>
+          <h1 data-i18n="hero.title">Music with impact</h1>
+          <p class="hero-lead" data-i18n="hero.lead">Independent label focused on urban, electronic and alternative sounds.</p>
+          <p class="genre-line">Electropop / Electronic / Trap / Downtempo / House / Drum &amp; Bass / Folk / Funk</p>
+          <div class="button-row">
+            <a class="button button-primary" href="#lanzamientos" data-i18n="buttons.listenReleases">Listen to releases</a>
+            <a class="button button-secondary" href="#maqueta" data-i18n="buttons.submitDemo">Submit demo</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="lanzamientos">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow" data-i18n="releases.eyebrow">Catalog</p>
+              <h2 data-i18n="releases.title">Releases</h2>
+            </div>
+            <a class="text-link" href="#plataformas" data-i18n="releases.platforms">View platforms</a>
+          </div>
+          <div class="release-grid" data-release-grid></div>
+        </div>
+      </section>
+
+      <section class="section section-split" id="about">
+        <div class="container split-grid">
+          <div>
+            <p class="eyebrow">About</p>
+            <h2 data-i18n="about.title">Sounds without limits</h2>
+          </div>
+          <div class="copy-stack">
+            <p data-i18n="about.p1">Punchy Punchy Records is an independent label created to push music with identity, energy and production vision.</p>
+            <p data-i18n="about.p2">We work with artists, producers and projects moving between urban, electronic, alternative and organic sounds: from trap, house, drum and bass and electropop to funk, folk, downtempo and hard-to-label hybrids.</p>
+            <p data-i18n="about.p3">The idea is simple: authentic, powerful music with a future-facing vision.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="maqueta">
+        <div class="container form-layout">
+          <div class="form-copy">
+            <p class="eyebrow">Demos</p>
+            <h2 data-i18n="demos.title">Got music to show?</h2>
+            <p data-i18n="demos.p1">If you are working on an urban, electronic, alternative or hard-to-label project, you can submit your demo for us to listen.</p>
+            <p data-i18n="demos.p2">We accept demos, finished songs, ideas in development and projects with their own identity.</p>
+            <p class="notice" data-i18n="demos.notice">Please send listening links. Do not attach heavy files.</p>
+          </div>
+          <form class="panel-form" aria-label="Demo submission form">
+            <label><span data-i18n="forms.artistName">Artist name</span> <input name="artist" autocomplete="name" required></label>
+            <label><span data-i18n="forms.email">Email</span> <input type="email" name="email" autocomplete="email" required></label>
+            <label><span data-i18n="forms.location">Country / city</span> <input name="location" autocomplete="address-level2"></label>
+            <label><span data-i18n="forms.listenLink">Listening link</span> <input type="url" name="listen" placeholder="https://" required></label>
+            <label><span data-i18n="forms.genre">Genre / style</span> <input name="genre"></label>
+            <label class="wide"><span data-i18n="forms.message">Message</span> <textarea name="message" rows="5"></textarea></label>
+            <button class="button button-primary wide" type="submit" data-i18n="buttons.submitDemo">Submit demo</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="section" id="artistas">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Roster</p>
+              <h2 data-i18n="artists.title">Artists</h2>
+            </div>
+            <span class="badge" data-i18n="artists.badge">Roster</span>
+          </div>
+          <div class="artist-grid" data-artist-grid></div>
+        </div>
+      </section>
+
+      <section class="section section-platforms" id="plataformas">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Listen everywhere</p>
+              <h2 data-i18n="platforms.title">Links / Platforms</h2>
+            </div>
+          </div>
+          <div class="platform-grid" data-platform-grid></div>
+        </div>
+      </section>
+
+      <section class="section" id="contacto">
+        <div class="container form-layout">
+          <div class="form-copy">
+            <p class="eyebrow" data-i18n="contact.eyebrow">Contact</p>
+            <h2 data-i18n="contact.title">Let's talk</h2>
+            <p data-i18n="contact.copy">For press, releases, partnerships, distribution or production, write to us at:</p>
+            <a class="mail-link" href="mailto:punchypunchyrecords@gmail.com">punchypunchyrecords@gmail.com</a>
+            <a class="button button-secondary" href="mailto:punchypunchyrecords@gmail.com" data-i18n="buttons.email">Write by email</a>
+          </div>
+          <form class="panel-form" aria-label="Contact form">
+            <label><span data-i18n="forms.name">Name</span> <input name="name" autocomplete="name" required></label>
+            <label><span data-i18n="forms.email">Email</span> <input type="email" name="email" autocomplete="email" required></label>
+            <label class="wide"><span data-i18n="forms.subject">Subject</span> <input name="subject" required></label>
+            <label class="wide"><span data-i18n="forms.message">Message</span> <textarea name="message" rows="6" required></textarea></label>
+            <button class="button button-primary wide" type="submit" data-i18n="buttons.sendMessage">Send message</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <a class="brand" href="#inicio" aria-label="Punchy Punchy Records home">
+          <span class="brand-mark">PP</span>
+          <span class="brand-text">Punchy Punchy <strong>Records</strong></span>
+        </a>
+        <p>Independent music. No compromise.</p>
+        <nav aria-label="Footer">
+          <a href="#inicio" data-i18n="nav.home">Home</a>
+          <a href="#lanzamientos" data-i18n="nav.releases">Releases</a>
+          <a href="#about">About</a>
+          <a href="#maqueta">Demos</a>
+          <a href="#contacto" data-i18n="nav.contact">Contact</a>
+        </nav>
+        <div class="social-strip footer-social" aria-label="Social networks and platforms">
+          <a href="https://open.spotify.com/intl-es/artist/2TMbr2pJzuY2AvSAkZjL1U?si=5ODBs_6NRw2A9DtL1bKjIQ" aria-label="Spotify" data-platform-icon="spotify"></a>
+          <a href="https://www.instagram.com/rodvicentemusic" aria-label="Instagram" data-platform-icon="instagram"></a>
+          <a href="https://youtube.com/@rodvicentemusic" aria-label="YouTube" data-platform-icon="youtube"></a>
+          <a href="#" aria-label="Bandcamp" data-platform-icon="bandcamp"></a>
+        </div>
+        <small data-i18n="footer.copy">© 2026 Punchy Punchy Records. All rights reserved.</small>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
