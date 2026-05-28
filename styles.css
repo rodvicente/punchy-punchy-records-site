@@ -946,16 +946,13 @@ textarea:focus {
 
 @keyframes heroFade {
   0% {
-    opacity: 0;
+    opacity: 1;
     transform: scale(1.03);
   }
-  7% {
+  12% {
     opacity: 1;
   }
-  16% {
-    opacity: 1;
-  }
-  22% {
+  14.285% {
     opacity: 0;
     transform: scale(1.09);
   }
@@ -967,16 +964,13 @@ textarea:focus {
 
 @keyframes heroFadeFlip {
   0% {
-    opacity: 0;
+    opacity: 1;
     transform: scaleX(-1) scale(1.03);
   }
-  7% {
+  12% {
     opacity: 1;
   }
-  16% {
-    opacity: 1;
-  }
-  22% {
+  14.285% {
     opacity: 0;
     transform: scaleX(-1) scale(1.09);
   }
