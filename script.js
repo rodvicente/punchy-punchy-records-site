@@ -254,6 +254,7 @@ const artists = [
   {
     name: "Taxi Radio",
     style: "Electronic / Pop / Alternative",
+    image: "assets/artists/taxi-radio-avatar.png",
     es: {
       style: "Electronic / Pop / Alternativo"
     },
