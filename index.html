@@ -131,7 +131,7 @@
             <h2 data-i18n="demos.title">Got music to show?</h2>
             <p data-i18n="demos.p1">If you are working on an urban, electronic, alternative or hard-to-label project, you can submit your demo for us to listen.</p>
             <p data-i18n="demos.p2">We accept demos, finished songs, ideas in development and projects with their own identity.</p>
-            <p class="notice" data-i18n="demos.notice">You can send a listening link and attach one audio file up to 10 MB.</p>
+            <p class="notice" data-i18n="demos.notice">You can send a listening link and attach one audio file up to 30 MB.</p>
           </div>
           <form class="panel-form" action="submit-form.php" method="post" enctype="multipart/form-data" aria-label="Demo submission form" data-demo-form>
             <input type="hidden" name="form_type" value="demo">
@@ -153,6 +153,13 @@
             <label><span data-i18n="forms.genre">Genre / style</span> <input name="genre"></label>
             <label class="wide"><span data-i18n="forms.referenceFile">Audio file</span> <input name="attachment" type="file" accept="audio/*,.mp3,.wav,.aiff,.aif,.m4a,.flac,.ogg"></label>
             <label class="wide"><span data-i18n="forms.message">Message</span> <textarea name="message" rows="5"></textarea></label>
+            <div class="upload-progress wide" data-upload-progress hidden>
+              <div class="upload-progress-top">
+                <span data-upload-label>Uploading file</span>
+                <strong data-upload-percent>0%</strong>
+              </div>
+              <progress value="0" max="100" data-upload-bar></progress>
+            </div>
             <p class="form-status wide" role="status" data-form-status hidden></p>
             <button class="button button-primary wide" type="submit" data-i18n="buttons.submitDemo">Submit demo</button>
           </form>

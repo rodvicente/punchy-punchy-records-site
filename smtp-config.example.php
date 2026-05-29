@@ -7,5 +7,5 @@ return [
     'from_email' => 'punchypunchyrecords@gmail.com',
     'from_name' => 'Punchy Punchy Records',
     'to_email' => 'punchypunchyrecords@gmail.com',
-    'max_attachment_bytes' => 10 * 1024 * 1024,
+    'max_attachment_bytes' => 30 * 1024 * 1024,
 ];

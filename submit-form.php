@@ -14,6 +14,31 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit('Method not allowed.');
 }
 
+$isAjax = strtolower($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') === 'xmlhttprequest';
+$maxAttachmentBytes = max((int)($config['max_attachment_bytes'] ?? 0), 30 * 1024 * 1024);
+
+function respond_error(string $message, int $statusCode, bool $isAjax): void
+{
+    http_response_code($statusCode);
+    if ($isAjax) {
+        header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode(['ok' => false, 'message' => $message]);
+        exit;
+    }
+    exit($message);
+}
+
+function respond_success(string $message, bool $isAjax): void
+{
+    if ($isAjax) {
+        header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode(['ok' => true, 'message' => $message]);
+        exit;
+    }
+    header('Location: index.html?sent=1#maqueta');
+    exit;
+}
+
 function clean_text(string $value): string
 {
     return trim(str_replace(["\r", "\n"], ' ', $value));
@@ -114,26 +139,69 @@ function html_escape(string $value): string
     return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+function format_bytes(int $bytes): string
+{
+    return number_format($bytes / 1024 / 1024, 1) . ' MB';
+}
+
+function build_upload_url(string $filename): string
+{
+    $host = $_SERVER['HTTP_HOST'] ?? '';
+    if ($host === '') {
+        return 'uploads/demos/' . rawurlencode($filename);
+    }
+
+    $isHttps = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+    $scheme = $isHttps ? 'https' : 'http';
+    $scriptDir = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '')), '/');
+    if ($scriptDir === '/') {
+        $scriptDir = '';
+    }
+
+    return $scheme . '://' . $host . $scriptDir . '/uploads/demos/' . rawurlencode($filename);
+}
+
 $formType = field('form_type') ?: 'demo';
 $email = clean_text(field('email'));
 $name = clean_text(field('name') ?: field('artist'));
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    http_response_code(400);
-    exit('Invalid email.');
+    respond_error('Invalid email.', 400, $isAjax);
 }
 
 $attachment = [];
+$uploadedFileName = '';
+$uploadedFileUrl = '';
+$uploadedFileSize = '';
 if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] !== UPLOAD_ERR_NO_FILE) {
     if ($_FILES['attachment']['error'] !== UPLOAD_ERR_OK) {
-        http_response_code(400);
-        exit('Upload failed.');
+        respond_error('Upload failed.', 400, $isAjax);
     }
-    if ($_FILES['attachment']['size'] > (int)$config['max_attachment_bytes']) {
-        http_response_code(400);
-        exit('Attachment is too large.');
+    if ($_FILES['attachment']['size'] > $maxAttachmentBytes) {
+        respond_error('Attachment is too large. Maximum size is 30 MB.', 400, $isAjax);
     }
+
+    $allowedExtensions = ['mp3', 'wav', 'aiff', 'aif', 'm4a', 'flac', 'ogg'];
+    $extension = strtolower(pathinfo((string)$_FILES['attachment']['name'], PATHINFO_EXTENSION));
+    if (!in_array($extension, $allowedExtensions, true)) {
+        respond_error('Unsupported audio file type.', 400, $isAjax);
+    }
+
+    $uploadDir = __DIR__ . '/uploads/demos';
+    if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true)) {
+        respond_error('Could not store uploaded file.', 500, $isAjax);
+    }
+
+    $storedName = date('Ymd-His') . '-' . bin2hex(random_bytes(8)) . '.' . $extension;
+    $storedPath = $uploadDir . '/' . $storedName;
+    if (!move_uploaded_file($_FILES['attachment']['tmp_name'], $storedPath)) {
+        respond_error('Could not store uploaded file.', 500, $isAjax);
+    }
+
     $attachment = $_FILES['attachment'];
+    $uploadedFileName = clean_text((string)$attachment['name']);
+    $uploadedFileUrl = build_upload_url($storedName);
+    $uploadedFileSize = format_bytes((int)$attachment['size']);
 }
 
 $fields = [
@@ -144,6 +212,9 @@ $fields = [
     'Project type' => field('project_type'),
     'Listening link' => field('listen'),
     'Genre / style' => field('genre'),
+    'Audio file' => $uploadedFileName,
+    'Audio file size' => $uploadedFileSize,
+    'Audio file link' => $uploadedFileUrl,
     'Subject' => field('subject'),
     'Message' => field('message'),
 ];
@@ -163,12 +234,10 @@ $thanksSubject = 'We received your demo - Punchy Punchy Records';
 $thanksHtml = '<p>Thanks for sending your music to Punchy Punchy Records.</p><p>We received your demo and will listen to it soon.</p>';
 
 try {
-    smtp_send($config, $config['to_email'], $adminSubject, $adminHtml, $email, $attachment);
+    smtp_send($config, $config['to_email'], $adminSubject, $adminHtml, $email);
     smtp_send($config, $email, $thanksSubject, $thanksHtml);
 } catch (Throwable $error) {
-    http_response_code(500);
-    exit('Could not send message.');
+    respond_error('Could not send message.', 500, $isAjax);
 }
 
-header('Location: index.html?sent=1#maqueta');
-exit;
+respond_success('Thanks. We received your demo and will listen to it soon.', $isAjax);

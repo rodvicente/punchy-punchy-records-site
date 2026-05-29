@@ -24,8 +24,12 @@ const translations = {
       title: "Got music to show?",
       p1: "If you are working on an urban, electronic, alternative or hard-to-label project, you can submit your demo for us to listen.",
       p2: "We accept demos, finished songs, ideas in development and projects with their own identity.",
-      notice: "You can send a listening link and attach one audio file up to 10 MB.",
-      success: "Thanks. We received your demo and will listen to it soon."
+      notice: "You can send a listening link and attach one audio file up to 30 MB.",
+      uploadLabel: "Uploading file",
+      sending: "Sending message...",
+      success: "Thanks. We received your demo and will listen to it soon.",
+      error: "We could not send your demo. Please try again in a moment.",
+      fileTooLarge: "The audio file must be 30 MB or smaller."
     },
     artists: { title: "Artists", badge: "Roster" },
     platforms: { title: "Links / Platforms" },
@@ -76,8 +80,12 @@ const translations = {
       title: "¿Tenés música para mostrar?",
       p1: "Si estás trabajando en un proyecto urbano, electrónico, alternativo o difícil de encasillar, podés enviar tu maqueta para que la escuchemos.",
       p2: "Aceptamos demos, canciones terminadas, ideas en desarrollo y proyectos con identidad propia.",
-      notice: "Podés enviar un link de escucha y adjuntar un archivo de audio de hasta 10 MB.",
-      success: "Gracias. Recibimos tu maqueta y la vamos a escuchar pronto."
+      notice: "Podés enviar un link de escucha y adjuntar un archivo de audio de hasta 30 MB.",
+      uploadLabel: "Subiendo archivo",
+      sending: "Enviando mensaje...",
+      success: "Gracias. Recibimos tu maqueta y la vamos a escuchar pronto.",
+      error: "No pudimos enviar tu maqueta. Probá de nuevo en un momento.",
+      fileTooLarge: "El archivo de audio debe pesar 30 MB o menos."
     },
     artists: { title: "Artistas", badge: "Roster" },
     platforms: { title: "Links / Plataformas" },
@@ -559,6 +567,95 @@ document.querySelectorAll("form").forEach((form) => {
     status.textContent = t("formStatus");
   });
 });
+
+const maxAttachmentBytes = 30 * 1024 * 1024;
+const demoForm = document.querySelector("[data-demo-form]");
+if (demoForm) {
+  const status = demoForm.querySelector("[data-form-status]");
+  const submitButton = demoForm.querySelector("button[type='submit']");
+  const attachmentInput = demoForm.querySelector("input[name='attachment']");
+  const progressWrap = demoForm.querySelector("[data-upload-progress]");
+  const progressBar = demoForm.querySelector("[data-upload-bar]");
+  const progressPercent = demoForm.querySelector("[data-upload-percent]");
+  const progressLabel = demoForm.querySelector("[data-upload-label]");
+
+  function setFormStatus(message, type = "") {
+    status.hidden = false;
+    status.textContent = message;
+    status.dataset.statusType = type;
+  }
+
+  function setProgress(value) {
+    const percent = Math.max(0, Math.min(100, Math.round(value)));
+    progressWrap.hidden = false;
+    progressBar.value = percent;
+    progressPercent.textContent = `${percent}%`;
+  }
+
+  attachmentInput.addEventListener("change", () => {
+    const file = attachmentInput.files[0];
+    if (file && file.size > maxAttachmentBytes) {
+      attachmentInput.value = "";
+      progressWrap.hidden = true;
+      setFormStatus(t("demos.fileTooLarge"), "error");
+    }
+  });
+
+  demoForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const file = attachmentInput.files[0];
+    if (file && file.size > maxAttachmentBytes) {
+      setFormStatus(t("demos.fileTooLarge"), "error");
+      return;
+    }
+
+    const request = new XMLHttpRequest();
+    submitButton.disabled = true;
+    status.hidden = true;
+    progressLabel.textContent = t("demos.uploadLabel");
+    setProgress(file ? 0 : 100);
+
+    request.upload.addEventListener("progress", (progressEvent) => {
+      if (!progressEvent.lengthComputable) return;
+      const percent = (progressEvent.loaded / progressEvent.total) * 100;
+      setProgress(percent);
+      if (percent >= 100) {
+        setFormStatus(t("demos.sending"), "");
+      }
+    });
+
+    request.addEventListener("load", () => {
+      setProgress(100);
+      submitButton.disabled = false;
+
+      let response = {};
+      try {
+        response = JSON.parse(request.responseText);
+      } catch (error) {
+        response = {};
+      }
+
+      if (request.status >= 200 && request.status < 300 && response.ok) {
+        demoForm.reset();
+        setFormStatus(t("demos.success"), "success");
+        return;
+      }
+
+      setFormStatus(response.message || t("demos.error"), "error");
+    });
+
+    request.addEventListener("error", () => {
+      submitButton.disabled = false;
+      setFormStatus(t("demos.error"), "error");
+    });
+
+    request.open("POST", demoForm.action);
+    request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+    request.send(new FormData(demoForm));
+    setFormStatus(file ? t("demos.uploadLabel") : t("demos.sending"), "");
+  });
+}
 
 const sentParams = new URLSearchParams(window.location.search);
 const demoStatus = document.querySelector("[data-form-status]");

@@ -239,6 +239,12 @@ textarea {
   transform: translateY(-2px);
 }
 
+.button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+  transform: none;
+}
+
 .button-primary {
   color: var(--black);
   background: var(--lime);
@@ -783,6 +789,61 @@ h3 {
   font-weight: 900;
   line-height: 1.4;
   text-transform: uppercase;
+}
+
+.form-status[data-status-type="success"] {
+  color: var(--lime);
+}
+
+.form-status[data-status-type="error"] {
+  color: #ff5b5b;
+}
+
+.upload-progress {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid rgba(182, 255, 0, 0.32);
+  border-radius: 4px;
+  background: rgba(182, 255, 0, 0.07);
+}
+
+.upload-progress[hidden] {
+  display: none;
+}
+
+.upload-progress-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--lime);
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.upload-progress progress {
+  width: 100%;
+  height: 12px;
+  overflow: hidden;
+  accent-color: var(--lime);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.upload-progress progress::-webkit-progress-bar {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.upload-progress progress::-webkit-progress-value {
+  background: var(--lime);
+}
+
+.upload-progress progress::-moz-progress-bar {
+  background: var(--lime);
 }
 
 input,
