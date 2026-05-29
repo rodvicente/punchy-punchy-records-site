@@ -128,23 +128,19 @@ const releases = [
     title: "Fuerza",
     artist: "Yesenia Quintero",
     credits: "Produced by Rod Vicente",
-    date: "June 24, 2026",
+    date: "Proximamente",
     genre: "Latin / Urban / Pop",
     mood: "New release",
     es: {
       credits: "Producido por Rod Vicente",
-      date: "24 de junio de 2026",
+      date: "Proximamente",
       mood: "Nuevo lanzamiento"
     },
     coverImage: "assets/covers/FUERZA.png",
-    spotify: "https://open.spotify.com/intl-es/artist/2TMbr2pJzuY2AvSAkZjL1U?si=5ODBs_6NRw2A9DtL1bKjIQ",
-    youtube: "dQw4w9WgXcQ",
-    links: {
-      Spotify: "https://open.spotify.com/intl-es/artist/2TMbr2pJzuY2AvSAkZjL1U?si=5ODBs_6NRw2A9DtL1bKjIQ",
-      Instagram: "https://www.instagram.com/rodvicentemusic",
-      YouTube: "https://youtube.com/@rodvicentemusic",
-      "Apple Music": "#"
-    }
+    spotify: "",
+    youtube: "",
+    showActions: false,
+    links: {}
   },
   {
     title: "Love To Be",
@@ -217,7 +213,8 @@ const releases = [
     spotify: "https://open.spotify.com/intl-es/album/0xVaKXO5hoN27ur5DQCqn6?si=KIG_DFyjTr-_gdkGa4xhwA",
     youtube: "",
     links: {
-      Spotify: "https://open.spotify.com/intl-es/album/0xVaKXO5hoN27ur5DQCqn6?si=KIG_DFyjTr-_gdkGa4xhwA"
+      Spotify: "https://open.spotify.com/intl-es/album/0xVaKXO5hoN27ur5DQCqn6?si=KIG_DFyjTr-_gdkGa4xhwA",
+      Instagram: "https://www.instagram.com/taxiradioband"
     }
   },
   {
@@ -232,10 +229,11 @@ const releases = [
       date: "Disponible ahora"
     },
     coverImage: "assets/covers/taxi-radio-strange-fire-remix.jpg",
-    spotify: "",
+    spotify: "https://open.spotify.com/intl-es/album/4MhWXLAx7QBpcKek1A81OS?si=5Barvn9kR9eA_eUkDE_-zg",
     youtube: "",
     links: {
-      Spotify: "#"
+      Spotify: "https://open.spotify.com/intl-es/album/4MhWXLAx7QBpcKek1A81OS?si=5Barvn9kR9eA_eUkDE_-zg",
+      Instagram: "https://www.instagram.com/taxiradioband"
     }
   }
 ];
@@ -271,7 +269,8 @@ const artists = [
       style: "Electronic / Pop / Alternativo"
     },
     links: {
-      Spotify: "https://open.spotify.com/intl-es/artist/0722h5FRnYosm6AdnNWhI5?si=dmzKD8hnQIiW9oRusooqfw"
+      Spotify: "https://open.spotify.com/intl-es/artist/0722h5FRnYosm6AdnNWhI5?si=dmzKD8hnQIiW9oRusooqfw",
+      Instagram: "https://www.instagram.com/taxiradioband"
     }
   }
 ];
@@ -432,11 +431,35 @@ function SpotifyEmbed(source, title) {
 }
 
 function ReleaseCard(release, index) {
-  const links = Object.entries(release.links)
+  const linkEntries = Object.entries(release.links || {}).filter(([, url]) => url && url !== "#");
+  const links = linkEntries
     .map(([label, url]) => `<a href="${url}" target="_blank" rel="noreferrer">${label}</a>`)
     .join("");
   const coverClass = release.coverImage ? "cover-art has-image" : `cover-art variant-${release.coverVariant}`;
   const coverImage = release.coverImage ? `<img src="${release.coverImage}" alt="${t("imageAlt.cover")} ${release.title}">` : "";
+  const spotifyEmbed = SpotifyEmbed(release.spotify, release.title);
+  const youtubeEmbed = YouTubeEmbed(release.youtube, release.title);
+  const hasDetails = Boolean(spotifyEmbed || youtubeEmbed || links);
+  const showActions = release.showActions !== false;
+  const listenUrl = release.links?.Spotify;
+  const actions = showActions
+    ? `
+          <div class="card-actions">
+            ${listenUrl ? `<a class="button button-primary" href="${listenUrl}" target="_blank" rel="noreferrer">${t("buttons.listen")}</a>` : ""}
+            ${hasDetails ? `
+            <button class="button button-secondary" type="button" aria-expanded="false" data-release-toggle>
+              ${t("buttons.more")}
+            </button>` : ""}
+          </div>`
+    : "";
+  const details = hasDetails
+    ? `
+      <div class="release-details" id="release-details-${index}">
+        ${spotifyEmbed}
+        ${youtubeEmbed}
+        ${links ? `<div class="external-links">${links}</div>` : ""}
+      </div>`
+    : "";
 
   return `
     <article class="release-card" data-release-card>
@@ -449,19 +472,10 @@ function ReleaseCard(release, index) {
           <p class="release-credits">${localize(release, "credits")}</p>
           <p class="release-date">${localize(release, "date")}</p>
           <p class="release-genre">${localize(release, "genre")}</p>
-          <div class="card-actions">
-            <a class="button button-primary" href="${release.links.Spotify || "#"}">${t("buttons.listen")}</a>
-            <button class="button button-secondary" type="button" aria-expanded="false" data-release-toggle>
-              ${t("buttons.more")}
-            </button>
-          </div>
+          ${actions}
         </div>
       </div>
-      <div class="release-details" id="release-details-${index}">
-        ${SpotifyEmbed(release.spotify, release.title)}
-        ${YouTubeEmbed(release.youtube, release.title)}
-        <div class="external-links">${links}</div>
-      </div>
+      ${details}
     </article>
   `;
 }
