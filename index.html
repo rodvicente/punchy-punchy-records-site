@@ -28,7 +28,6 @@
         <a href="#lanzamientos" data-i18n="nav.releases">Releases</a>
         <a href="#about">About</a>
         <a href="#maqueta" data-i18n="nav.demos">Submit demos</a>
-        <a href="#contacto" data-i18n="nav.contact">Contact</a>
       </nav>
 
       <div class="header-actions">
@@ -100,6 +99,31 @@
         </div>
       </section>
 
+      <section class="section section-platforms" id="plataformas">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Listen everywhere</p>
+              <h2 data-i18n="platforms.title">Links / Platforms</h2>
+            </div>
+          </div>
+          <div class="platform-grid" data-platform-grid></div>
+        </div>
+      </section>
+
+      <section class="section" id="artistas">
+        <div class="container">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Roster</p>
+              <h2 data-i18n="artists.title">Artists</h2>
+            </div>
+            <span class="badge" data-i18n="artists.badge">Roster</span>
+          </div>
+          <div class="artist-grid" data-artist-grid></div>
+        </div>
+      </section>
+
       <section class="section" id="maqueta">
         <div class="container form-layout">
           <div class="form-copy">
@@ -109,7 +133,7 @@
             <p data-i18n="demos.p2">We accept demos, finished songs, ideas in development and projects with their own identity.</p>
             <p class="notice" data-i18n="demos.notice">You can send a listening link and attach one audio file up to 10 MB.</p>
           </div>
-          <form class="panel-form" action="submit-form.php" method="post" enctype="multipart/form-data" aria-label="Demo submission form">
+          <form class="panel-form" action="submit-form.php" method="post" enctype="multipart/form-data" aria-label="Demo submission form" data-demo-form>
             <input type="hidden" name="form_type" value="demo">
             <label><span data-i18n="forms.artistName">Artist name</span> <input name="artist" autocomplete="name" required></label>
             <label><span data-i18n="forms.email">Email</span> <input type="email" name="email" autocomplete="email" required></label>
@@ -129,52 +153,8 @@
             <label><span data-i18n="forms.genre">Genre / style</span> <input name="genre"></label>
             <label class="wide"><span data-i18n="forms.referenceFile">Audio file</span> <input name="attachment" type="file" accept="audio/*,.mp3,.wav,.aiff,.aif,.m4a,.flac,.ogg"></label>
             <label class="wide"><span data-i18n="forms.message">Message</span> <textarea name="message" rows="5"></textarea></label>
+            <p class="form-status wide" role="status" data-form-status hidden></p>
             <button class="button button-primary wide" type="submit" data-i18n="buttons.submitDemo">Submit demo</button>
-          </form>
-        </div>
-      </section>
-
-      <section class="section" id="artistas">
-        <div class="container">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Roster</p>
-              <h2 data-i18n="artists.title">Artists</h2>
-            </div>
-            <span class="badge" data-i18n="artists.badge">Roster</span>
-          </div>
-          <div class="artist-grid" data-artist-grid></div>
-        </div>
-      </section>
-
-      <section class="section section-platforms" id="plataformas">
-        <div class="container">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Listen everywhere</p>
-              <h2 data-i18n="platforms.title">Links / Platforms</h2>
-            </div>
-          </div>
-          <div class="platform-grid" data-platform-grid></div>
-        </div>
-      </section>
-
-      <section class="section" id="contacto">
-        <div class="container form-layout">
-          <div class="form-copy">
-            <p class="eyebrow" data-i18n="contact.eyebrow">Contact</p>
-            <h2 data-i18n="contact.title">Let's talk</h2>
-            <p data-i18n="contact.copy">For press, releases, partnerships, distribution or production, write to us at:</p>
-            <a class="mail-link" href="mailto:punchypunchyrecords@gmail.com">punchypunchyrecords@gmail.com</a>
-            <a class="button button-secondary" href="mailto:punchypunchyrecords@gmail.com" data-i18n="buttons.email">Write by email</a>
-          </div>
-          <form class="panel-form" action="submit-form.php" method="post" enctype="multipart/form-data" aria-label="Contact form">
-            <input type="hidden" name="form_type" value="contact">
-            <label><span data-i18n="forms.name">Name</span> <input name="name" autocomplete="name" required></label>
-            <label><span data-i18n="forms.email">Email</span> <input type="email" name="email" autocomplete="email" required></label>
-            <label class="wide"><span data-i18n="forms.subject">Subject</span> <input name="subject" required></label>
-            <label class="wide"><span data-i18n="forms.message">Message</span> <textarea name="message" rows="6" required></textarea></label>
-            <button class="button button-primary wide" type="submit" data-i18n="buttons.sendMessage">Send message</button>
           </form>
         </div>
       </section>
@@ -192,7 +172,6 @@
           <a href="#lanzamientos" data-i18n="nav.releases">Releases</a>
           <a href="#about">About</a>
           <a href="#maqueta">Demos</a>
-          <a href="#contacto" data-i18n="nav.contact">Contact</a>
         </nav>
         <div class="social-strip footer-social" aria-label="Social networks and platforms">
           <a href="https://open.spotify.com/intl-es/artist/2TMbr2pJzuY2AvSAkZjL1U?si=5ODBs_6NRw2A9DtL1bKjIQ" aria-label="Spotify" data-platform-icon="spotify"></a>

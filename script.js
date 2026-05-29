@@ -1,6 +1,6 @@
 const translations = {
   en: {
-    nav: { home: "Home", releases: "Releases", demos: "Submit demos", contact: "Contact" },
+    nav: { home: "Home", releases: "Releases", demos: "Submit demos" },
     hero: {
       title: "Music with impact",
       lead: "Independent label focused on urban, electronic and alternative sounds."
@@ -9,8 +9,6 @@ const translations = {
       listenNow: "Listen now",
       listenReleases: "Listen to releases",
       submitDemo: "Submit demo",
-      email: "Write by email",
-      sendMessage: "Send message",
       listen: "Listen",
       more: "More",
       close: "Close"
@@ -26,15 +24,11 @@ const translations = {
       title: "Got music to show?",
       p1: "If you are working on an urban, electronic, alternative or hard-to-label project, you can submit your demo for us to listen.",
       p2: "We accept demos, finished songs, ideas in development and projects with their own identity.",
-      notice: "You can send a listening link and attach one audio file up to 10 MB."
+      notice: "You can send a listening link and attach one audio file up to 10 MB.",
+      success: "Thanks. We received your demo and will listen to it soon."
     },
     artists: { title: "Artists", badge: "Roster" },
     platforms: { title: "Links / Platforms" },
-    contact: {
-      eyebrow: "Contact",
-      title: "Let's talk",
-      copy: "For press, releases, partnerships, distribution or production, write to us at:"
-    },
     forms: {
       artistName: "Artist name",
       email: "Email",
@@ -58,7 +52,7 @@ const translations = {
     imageAlt: { cover: "Cover artwork for", artist: "Photo of" }
   },
   es: {
-    nav: { home: "Inicio", releases: "Lanzamientos", demos: "Enviá tu maqueta", contact: "Contacto" },
+    nav: { home: "Inicio", releases: "Lanzamientos", demos: "Enviá tu maqueta" },
     hero: {
       title: "Música con impacto",
       lead: "Sello independiente enfocado en sonidos urbanos, electrónicos y alternativos."
@@ -67,8 +61,6 @@ const translations = {
       listenNow: "Escuchar ahora",
       listenReleases: "Escuchar lanzamientos",
       submitDemo: "Enviar maqueta",
-      email: "Escribir por email",
-      sendMessage: "Enviar mensaje",
       listen: "Escuchar",
       more: "Ver más",
       close: "Cerrar"
@@ -84,15 +76,11 @@ const translations = {
       title: "¿Tenés música para mostrar?",
       p1: "Si estás trabajando en un proyecto urbano, electrónico, alternativo o difícil de encasillar, podés enviar tu maqueta para que la escuchemos.",
       p2: "Aceptamos demos, canciones terminadas, ideas en desarrollo y proyectos con identidad propia.",
-      notice: "Podés enviar un link de escucha y adjuntar un archivo de audio de hasta 10 MB."
+      notice: "Podés enviar un link de escucha y adjuntar un archivo de audio de hasta 10 MB.",
+      success: "Gracias. Recibimos tu maqueta y la vamos a escuchar pronto."
     },
     artists: { title: "Artistas", badge: "Roster" },
     platforms: { title: "Links / Plataformas" },
-    contact: {
-      eyebrow: "Contacto",
-      title: "Hablemos",
-      copy: "Para prensa, lanzamientos, alianzas, distribución o producción, escribinos a:"
-    },
     forms: {
       artistName: "Nombre artístico",
       email: "Email",
@@ -571,5 +559,12 @@ document.querySelectorAll("form").forEach((form) => {
     status.textContent = t("formStatus");
   });
 });
+
+const sentParams = new URLSearchParams(window.location.search);
+const demoStatus = document.querySelector("[data-form-status]");
+if (sentParams.get("sent") === "1" && demoStatus) {
+  demoStatus.hidden = false;
+  demoStatus.textContent = t("demos.success");
+}
 
 applyLanguage("en");

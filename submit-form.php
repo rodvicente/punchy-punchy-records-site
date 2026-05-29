@@ -114,7 +114,7 @@ function html_escape(string $value): string
     return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
-$formType = field('form_type') ?: 'contact';
+$formType = field('form_type') ?: 'demo';
 $email = clean_text(field('email'));
 $name = clean_text(field('name') ?: field('artist'));
 
@@ -156,13 +156,11 @@ foreach ($fields as $label => $value) {
     $rows .= '<tr><th align="left" valign="top">' . html_escape($label) . '</th><td>' . nl2br(html_escape($value)) . '</td></tr>';
 }
 
-$adminSubject = $formType === 'demo'
-    ? 'New Punchy Punchy Records demo submission'
-    : 'New message for Punchy Punchy Records';
+$adminSubject = 'New Punchy Punchy Records demo submission';
 $adminHtml = '<h2>' . html_escape($adminSubject) . '</h2><table cellpadding="8" cellspacing="0" border="1">' . $rows . '</table>';
 
-$thanksSubject = 'We received your message - Punchy Punchy Records';
-$thanksHtml = '<p>Thanks for contacting Punchy Punchy Records.</p><p>We received your submission and will get back to you soon.</p>';
+$thanksSubject = 'We received your demo - Punchy Punchy Records';
+$thanksHtml = '<p>Thanks for sending your music to Punchy Punchy Records.</p><p>We received your demo and will listen to it soon.</p>';
 
 try {
     smtp_send($config, $config['to_email'], $adminSubject, $adminHtml, $email, $attachment);
@@ -172,5 +170,5 @@ try {
     exit('Could not send message.');
 }
 
-header('Location: index.html?sent=1#contacto');
+header('Location: index.html?sent=1#maqueta');
 exit;

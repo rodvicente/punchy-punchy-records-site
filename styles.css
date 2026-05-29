@@ -925,15 +925,6 @@ textarea:focus {
   height: 27px;
 }
 
-.mail-link {
-  display: block;
-  width: fit-content;
-  margin: 6px 0 22px;
-  color: var(--lime);
-  font-weight: 900;
-  overflow-wrap: anywhere;
-}
-
 .site-footer {
   padding: 38px 0;
   border-top: 1px solid var(--line);
