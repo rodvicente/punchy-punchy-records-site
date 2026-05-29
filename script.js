@@ -128,7 +128,7 @@ const releases = [
     title: "Fuerza",
     artist: "Yesenia Quintero",
     credits: "Produced by Rod Vicente",
-    date: "Proximamente",
+    date: "Soon",
     genre: "Latin / Urban / Pop",
     mood: "New release",
     es: {
