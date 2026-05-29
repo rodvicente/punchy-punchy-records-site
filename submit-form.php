@@ -170,9 +170,11 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 $attachment = [];
+$emailAttachment = [];
 $uploadedFileName = '';
 $uploadedFileUrl = '';
 $uploadedFileSize = '';
+$uploadedFileDelivery = '';
 if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] !== UPLOAD_ERR_NO_FILE) {
     if ($_FILES['attachment']['error'] !== UPLOAD_ERR_OK) {
         respond_error('Upload failed.', 400, $isAjax);
@@ -202,6 +204,16 @@ if (isset($_FILES['attachment']) && $_FILES['attachment']['error'] !== UPLOAD_ER
     $uploadedFileName = clean_text((string)$attachment['name']);
     $uploadedFileUrl = build_upload_url($storedName);
     $uploadedFileSize = format_bytes((int)$attachment['size']);
+    $uploadedFileDelivery = 'Link included';
+
+    if ((int)$attachment['size'] <= 18 * 1024 * 1024) {
+        $emailAttachment = [
+            'name' => $uploadedFileName,
+            'type' => $attachment['type'] ?: 'application/octet-stream',
+            'tmp_name' => $storedPath,
+        ];
+        $uploadedFileDelivery = 'Attached and link included';
+    }
 }
 
 $fields = [
@@ -214,6 +226,7 @@ $fields = [
     'Genre / style' => field('genre'),
     'Audio file' => $uploadedFileName,
     'Audio file size' => $uploadedFileSize,
+    'Audio file delivery' => $uploadedFileDelivery,
     'Audio file link' => $uploadedFileUrl,
     'Subject' => field('subject'),
     'Message' => field('message'),
@@ -234,7 +247,7 @@ $thanksSubject = 'We received your demo - Punchy Punchy Records';
 $thanksHtml = '<p>Thanks for sending your music to Punchy Punchy Records.</p><p>We received your demo and will listen to it soon.</p>';
 
 try {
-    smtp_send($config, $config['to_email'], $adminSubject, $adminHtml, $email);
+    smtp_send($config, $config['to_email'], $adminSubject, $adminHtml, $email, $emailAttachment);
     smtp_send($config, $email, $thanksSubject, $thanksHtml);
 } catch (Throwable $error) {
     respond_error('Could not send message.', 500, $isAjax);
